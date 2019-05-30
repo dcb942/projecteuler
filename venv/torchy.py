@@ -18,3 +18,4 @@ ram_usage = psutil.virtual_memory().percent
 print("Percent RAM usage: ", ram_usage)
 x=input("What is your name? ")
 print("Hello", x)
+print("Commit Test")
