@@ -23,14 +23,27 @@ class launch_date_generator():
 
 
     def date_generator(self):
-        datelist = pd.date_range(pd.datetime.today(), periods=100).tolist()
-        return datelist
+        datelist = pd.date_range('2021-01-01', periods=12, freq='MS').to_list()  # Generate Dates
+        datedhours1 = pd.DataFrame()
+
+        for months in datelist:
+
+            datedhours1 = pd.DataFrame(pd.date_range(start=months, periods=24, freq='H'), columns=['Hours']).append(datedhours1,ignore_index=True)
 
 
-run1=launch_date_generator(1-1-2021,12-31-2021)
 
-datelist1=run1.date_generator()
+        datedf = pd.DataFrame(datelist,columns=["Dates"])  # Convert to Dataframe
+        datedf["Dates"] = datedf["Dates"].astype('datetime64[m]')  # Get Rid of Nano-seconds
+
+        return datedf, datedhours1
+
+
+run1=launch_date_generator(1-1-2021, 12-31-2021)
+
+datelist1,datelist2=run1.date_generator()
+datelist2.to_csv(r'/users/dbaros/documents/test1.csv')
 print(datelist1)
+print(datelist2)
 ##################################
 
 
