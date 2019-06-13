@@ -23,12 +23,9 @@ class launch_date_generator():
 
 
     def date_generator(self):
-        datelist = pd.date_range('2021-01-01', periods=12, freq='MS').to_list()  # Generate Dates
+        datelist = pd.date_range('2021-01-01', periods=525600, freq='T').to_list()  # Generate Dates
         datedhours1 = pd.DataFrame()
 
-        for months in datelist:
-
-            datedhours1 = pd.DataFrame(pd.date_range(start=months, periods=24, freq='H'), columns=['Hours']).append(datedhours1,ignore_index=True)
 
 
 
