@@ -16,31 +16,72 @@ import random
 
 class launch_date_generator():
 
-    def __init__(self,start_date,end_date):
-        self.start_date = start_date
-        self.end_date = end_date
+    def __init__(self):
+        random.seed()
+
+        self.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+                       'November', 'December']
+
+        self.months_numerical = range(1, 13)
+        self.hours = range(7, 18)
+        self.minutes = range(0, 60)
+        self.ampm = ['AM', 'PM']
+
+        # for n in self.months_numerical:
+        #    print(n)
+
+        self.monthsdays = {'January': 31, 'February': 28, 'March': 31, 'April': 30, 'May': 31, 'June': 30, 'July': 31,
+                           'August': 31, 'September': 30, 'October': 31, 'November': 30, 'December': 31}
 
 
 
     def date_generator(self):
-        datelist = pd.date_range('2021-01-01', periods=525600, freq='T').to_list()  # Generate Dates
-        datedhours1 = pd.DataFrame()
+
+        date_list=[]
+        date_list_index=0
+
+        for x in self.months_numerical:
+            chosen_month_days= range(1, self.monthsdays[self.months[x-1]])
+            # print('Chosen Month: ', x)
+            # print('Chosen month day: ', chosen_month_days[x-1])
+            starting_day = random.choice(chosen_month_days)
+
+            # print('Initial Starting day: ', starting_day)
+
+            if abs(starting_day-self.monthsdays[self.months[x-1]]) <= 5:
+                starting_day=starting_day-5
+            day_range = range(starting_day, starting_day+5)
+
+            for y in day_range:
+                starting_hour = random.choice(self.hours)
+
+
+                hour_range = range(starting_hour, starting_hour+2)
+
+
+                for z in hour_range:
+                    for k in self.minutes:
+
+                        date_list.append(str(x)+"-"+str(y)+"-2020"+"  "+str(z)+":"+str(k)+":00")
+
+
+
+        date_list_dataframe = pd.DataFrame(date_list, columns=["Dates"])
+
+        return date_list_dataframe
 
 
 
 
-        datedf = pd.DataFrame(datelist,columns=["Dates"])  # Convert to Dataframe
-        datedf["Dates"] = datedf["Dates"].astype('datetime64[m]')  # Get Rid of Nano-seconds
 
-        return datedf, datedhours1
+run1=launch_date_generator()
+
+datelist1 = run1.date_generator()
 
 
-run1=launch_date_generator(1-1-2021, 12-31-2021)
+datelist1.to_csv(r'/users/dbaros/documents/test1.csv')
 
-datelist1,datelist2=run1.date_generator()
-datelist2.to_csv(r'/users/dbaros/documents/test1.csv')
-print(datelist1)
-print(datelist2)
+
 ##################################
 
 
