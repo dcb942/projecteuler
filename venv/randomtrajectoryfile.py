@@ -38,6 +38,8 @@ class launch_date_generator():
     def date_generator(self):
 
         date_list=[]
+        launch_valid=[]
+        count=0
         date_list_index=0
 
         for x in self.months_numerical:
@@ -65,8 +67,18 @@ class launch_date_generator():
                         date_list.append(str(x)+"-"+str(y)+"-2020"+"  "+str(z)+":"+str(k)+":00")
 
 
+        for num_dates in date_list:
+            launch_valid.append(True)
 
-        date_list_dataframe = pd.DataFrame(date_list, columns=["Dates"])
+            if (count % random.randrange(1, 4)) == 1:
+                launch_valid[count] = False
+
+            count += 1
+
+
+
+        df_contents={'Dates': date_list, 'Launch Valid': launch_valid}
+        date_list_dataframe = pd.DataFrame(data=df_contents)
 
         return date_list_dataframe
 
